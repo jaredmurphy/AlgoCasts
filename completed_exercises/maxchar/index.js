@@ -5,27 +5,24 @@
 // maxChar("abcccccccd") === "c"
 // maxChar("apple 1231111") === "1"
 
+// ##### Create character count, iterate to find letter with highest number
 function maxChar(str) {
-  const charMap = {};
-  let max = 0;
-  let maxChar = '';
+  const counts = str.split('').reduce((prev, curr) => {
+    prev[curr] ? prev[curr]++ : (prev[curr] = 1);
+    return prev;
+  }, {});
 
-  for (let char of str) {
-    if (charMap[char]) {
-      charMap[char]++;
-    } else {
-      charMap[char] = 1;
+  let topChar = '';
+  let topCount = 0;
+
+  for (let key in counts) {
+    if (counts[key] > topCount) {
+      topChar = key;
+      topCount = counts[key];
     }
   }
 
-  for (let char in charMap) {
-    if (charMap[char] > max) {
-      max = charMap[char];
-      maxChar = char;
-    }
-  }
-
-  return maxChar;
+  return topChar;
 }
 
 module.exports = maxChar;
